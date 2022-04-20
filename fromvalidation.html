@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FROM VALIDATION</title>
+    <!--css link-->
+    <link href="formvalidation.css" rel="stylesheet">
+    <!--jquery-->
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <center>
+        
+<div class="seso">
+    <div id="container">
+        <h2>Form Registration</h2>
+        <!--Email id-->
+        <div id="label1">
+            <label for="Email">Email:</label><br>
+            <input type="text" id="Email" name="Email" placeholder="Enter email-id">
+        </div>
+        <!--Phone number-->
+        <div id="label2">
+            <label for="Phone">Phone Number:</label><br>
+            <input type="text" id="Phone" name="Phone" placeholder="Enter your phone number">
+        </div>
+        <!--Password-->
+        <div id="label3">
+            <label for="Password">Password:</label><br>
+            <input type="password" id="Password" name="Password" placeholder="Enter password">
+        </div>
+        <!--Confirem password-->
+        <div id="label4">
+            <label for="Cpassword">Confirm-Password:</label><br>
+            <input type="password" id="Cpassword" name="Cpassword" placeholder="Re-enter your password">
+        </div>
+        <!--submit button-->
+        <input type="submit" id="submitbutton">
+        <div id="success"></div>
+        <div id="errors"></div>
+    </div>
+    
+</div>
+</center>
+<script>
+        var errormessage="";
+        var missingfields="";
+        var ioi=$(".pngs").attr("src","circle-check.png");
+        //email valid function
+         function validEmail(email){
+            const regex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
+             return regex.test(email);
+            }
+        function autoload(){
+            var img=document.createElement("img");
+            img.src="check-circle.png";
+            document.getElementById("success").appendChild(img);
+        }
+        function infoload(){
+            var img=document.createElement("img");
+            img.src="info.png";
+            var insert=document.getElementById("errors").appendChild(img);
+        }
+    //jquery code
+    $("#submitbutton").click(function(){
+        //missing fileds
+        if($("#Email").val()==""){
+            missingfields="<p>Email is not filled</p>";
+        }
+        if($("#Phone").val()==""){
+            missingfields+="<p>Phone number is not filled</p>";
+        }
+        if($("#Password").val()==""){
+            missingfields+="<p>Password is not filled</p>";
+        }
+        if($("#Cpassword").val()==""){
+            missingfields+="<p>Confirmation password is not filled</p>";
+        }
+        //not valid
+        if(validEmail($("#Email").val()) == false)
+        {
+            errormessage+="<p>Email not valid</p>";
+        }
+        if($.isNumeric($("#Phone").val())== false){
+            errormessage+="<p>Phone number is not valid</p>";
+        }
+        if($("#Password").val()!=$("#Cpassword").val()){
+            errormessage+="<p>Both the passwords didnt match</p>";
+        }
+        //dispaly
+        if(errormessage==""){
+            $("#success").html("<h2>Successfully registered</h2>")+
+            $("#success").html(autoload());
+               
+        }else{
+            var adderrors=errormessage+missingfields;
+          $("#errors").html(adderrors)+$("#errors").html(infoload());
+        }
+
+    });
+</script>    
+
+</body>
+</html>
